@@ -1,5 +1,20 @@
 
 
+body {
+    background-color: rgb(244, 189, 212);
+}
+
+.background {
+    background-color: rgb(240, 191, 240);
+}
+
+.centered {
+    max-width: fit-content;
+    margin-inline: auto;
+}
+
 h1 {
     font-family:Arial, Helvetica, sans-serif;
+    color: black;
+    font-size: 3rem;
 }

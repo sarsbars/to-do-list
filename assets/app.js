@@ -6,6 +6,9 @@ window.onload = () => {
 
     form.addEventListener("submit", addItem);
     items.addEventListener("click", removeItem);
+    document.getElementById("item").addEventListener("keyup", function() {
+        toggleButton(this, "submit");
+    });
 };
 
 function addItem(e) {
@@ -14,24 +17,33 @@ function addItem(e) {
     let newItem = document.getElementById("item").value;
     if (newItem.trim() === "") return;
 
-    let li = document.createElement("li");
-    li.className = "list-group-item d-flex justify-content-between align-items-center";
+    if (document.getElementById("submit").value === "EDIT") {
+        // Update the item in the list
+        editItem.parentNode.childNodes[0].textContent = newItem;
+        document.getElementById("submit").value = "Submit";
+        editItem = null;
+    } else {
+        // Add a new item to the list
+        let li = document.createElement("li");
+        li.className = "list-group-item d-flex justify-content-between align-items-center";
 
-    let deleteButton = document.createElement("button");
-    deleteButton.className = "btn btn-danger btn-sm float-right delete";
-    deleteButton.appendChild(document.createTextNode("Delete"));
+        let deleteButton = document.createElement("button");
+        deleteButton.className = "btn btn-danger btn-sm float-right delete";
+        deleteButton.appendChild(document.createTextNode("Delete"));
 
-    let editButton = document.createElement("button");
-    editButton.className = "btn btn-success btn-sm float-right edit";
-    editButton.appendChild(document.createTextNode("Edit"));
+        let editButton = document.createElement("button");
+        editButton.className = "btn btn-success btn-sm float-right edit";
+        editButton.appendChild(document.createTextNode("Edit"));
 
-    li.appendChild(document.createTextNode(newItem));
-    li.appendChild(deleteButton);
-    li.appendChild(editButton);
+        li.appendChild(document.createTextNode(newItem));
+        li.appendChild(deleteButton);
+        li.appendChild(editButton);
 
-    items.appendChild(li);
+        items.appendChild(li);
+    }
+
     document.getElementById("item").value = "";
-    showSuccessMessage("Item added successfully");
+    showSuccessMessage("Item added/updated successfully");
 }
 
 function removeItem(e) {
